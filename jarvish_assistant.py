@@ -1,6 +1,7 @@
 import speech_recognition as sr
 import webbrowser
 import pyttsx3
+import pywhatkit
 
 engine = pyttsx3.init()
 
@@ -22,18 +23,22 @@ def processCommand(c):
     elif "open music" in c:
         speak("Opening Google")
         webbrowser.open("https://music.youtube.com/")
-    elif "play one thousand miles" in c:
-        speak("Opening Google")
-        webbrowser.open("https://youtu.be/OeLC1sc6ckg?si=dT2GgYIpGl1MDWjj")
-    elif "play tere liye" in c:
-        speak("Opening Google")
-        webbrowser.open("https://www.youtube.com/watch?v=3W7I6beLnkk&list=RD3W7I6beLnkk&start_radio=1&pp=ygUKdGVyZSBsaXllZaAHAQ%3D%3D")
-    elif "play millionaire " in c:
-        speak("Opening Google")
-        webbrowser.open("https://youtu.be/XO8wew38VM8?si=_R1QBtuZH7wUi2nY")
-    elif "play paro" in c:
-        speak("Opening Google")
-        webbrowser.open("https://www.youtube.com/watch?v=Es4NrOnoNb4&list=RDEs4NrOnoNb4&start_radio=1&pp=ygUOcGFybyB1bnBsdWdnZWSgBwE%3D")
+    # elif "52 bar" in c:
+    #     webbrowser.open("https://www.youtube.com/watch?v=4DfVxVeqk2o&list=RD4DfVxVeqk2o&start_radio=1&pp=ygUHNTIgYmFyc6AHAQ%3D%3D")
+    # elif "play tere liye" in c:
+    #     speak("Opening Google")
+    #     webbrowser.open("https://www.youtube.com/watch?v=3W7I6beLnkk&list=RD3W7I6beLnkk&start_radio=1&pp=ygUKdGVyZSBsaXllZaAHAQ%3D%3D")
+    # elif "play ishq " in c:
+    #     speak("Opening Google")
+    #     webbrowser.open("https://youtu.be/hHuG7FIKgtc?list=RDhHuG7FIKgtc")
+    # elif "play paro" in c:
+    #     speak("Opening Google")
+    #     webbrowser.open("https://www.youtube.com/watch?v=Es4NrOnoNb4&list=RDEs4NrOnoNb4&start_radio=1&pp=ygUOcGFybyB1bnBsdWdnZWSgBwE%3D")
+    elif "play" in c:
+        song = c.replace("play", "").strip()
+        speak(f"Playing {song} on YouTube")
+        pywhatkit.playonyt(song)
+
     else:
         print("NOTHING MATCH")
 if __name__ == "__main__":
@@ -43,19 +48,17 @@ if __name__ == "__main__":
     while True:
         try:
             with sr.Microphone() as source:
-                print("Listening for 'Jarvis'...")
+                print("Listening for ' hey Jarvis'...")
                 recognizer.adjust_for_ambient_noise(source, duration=0.5)
                 audio = recognizer.listen(source, timeout=5, phrase_time_limit=3)
                 word = recognizer.recognize_google(audio)
                 print(f"You said: {word}")
 
-                if "jarvis" in word.lower():
-                    speak("Ya")
 
-                    with sr.Microphone() as source:
+                with sr.Microphone() as source:
                         print("Jarvis Active, listening for command...")
                         recognizer.adjust_for_ambient_noise(source, duration=0.5)
-                        audio = recognizer.listen(source, timeout=5, phrase_time_limit=5)
+                        audio = recognizer.listen(source, timeout=9, phrase_time_limit=9)
                         command = recognizer.recognize_google(audio)
                         print(f"Command: {command}")
 
