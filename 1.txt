@@ -1,0 +1,16 @@
+   while True:
+            r = sr.Recognizer()
+
+            
+            try:
+                with sr.Microphone() as source:
+                    print("Listening.....")
+                    audio = r.listen(source,timeout =5,phrase_time_limit=2)
+                    command = r.recognize_google(audio).lower()
+                    print(f" {command}")
+                    if (command.lower() == "hello"):
+                        speak("Yes ??")
+            except sr.UnknownValueError:
+                print("Sorry, I did not understand that.")
+            except sr.RequestError:
+                print("Speech service unavailable.") 
